@@ -2,6 +2,7 @@ import io
 from contextlib import redirect_stdout
 from typing import Optional
 
+import numpy as np
 import pandas as pd
 from dotenv import load_dotenv
 from plotly import express as px
@@ -27,7 +28,7 @@ class ChartGPT:
             conversational (bool, optional): _description_. Defaults to True.
             verbose (bool, optional): _description_. Defaults to False.
         """
-        self.llm = LLM(api_key=api_key, **kwargs)
+        self.llm = LLM(**kwargs)
         self.fig = None
         self.last_run_code = None
         self.variables_payload = {}
@@ -109,7 +110,7 @@ fig"""
         """
         self.last_run_code = code
 
-        environment: dict = {"pd": pd, "go": go, "px": px, "df": df}
+        environment: dict = {"pd": pd, "go": go, "px": px, "df": df, "np": np}
 
         with redirect_stdout(io.StringIO()) as output:
             n_retries = 0
